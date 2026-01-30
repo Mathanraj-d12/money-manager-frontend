@@ -355,8 +355,8 @@ function Home() {
   {/* ✏️ EDIT */}
   <button
     onClick={() => {
-      setEditData(t);   // 🔥 important
-      setOpen(true);    // modal open
+      setEditData(t);   
+      setOpen(true);    
     }}
     className="text-indigo-600 text-xs hover:underline"
   >
@@ -392,7 +392,7 @@ function Home() {
       fetchData();
       fetchSummary();
       fetchAnalytics(analyticsType);
-      setOpen(false); // 🔴 IMPORTANT
+      setOpen(false); 
     }}
     onClose={() => setOpen(false)}
   />
