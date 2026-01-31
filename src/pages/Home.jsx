@@ -207,27 +207,30 @@ function Home() {
     Filter Transactions
   </h3>
 
-  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-    {/* CATEGORY */}
-    <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
-        Category
-      </label>
-      <select
-        name="category"
-        value={filters.category}
-        onChange={handleFilterChange}
-        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
-      >
-        <option value="">All</option>
-        <option value="food">Food</option>
-        <option value="fuel">Fuel</option>
-        <option value="movie">Movie</option>
-        <option value="loan">Loan</option>
-        <option value="medical">Medical</option>
-        <option value="transfer">Transfer</option>
-      </select>
-    </div>
+  <div>
+  <label className="block text-xs font-medium text-slate-500 mb-1">
+    Category
+  </label>
+
+  <input
+    list="categories"
+    name="category"
+    value={filters.category}
+    onChange={handleFilterChange}
+    placeholder="Type or select category"
+    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
+  />
+
+  <datalist id="categories">
+    <option value="food" />
+    <option value="fuel" />
+    <option value="movie" />
+    <option value="loan" />
+    <option value="medical" />
+    <option value="transfer" />
+  </datalist>
+</div>
+
 
     {/* DIVISION */}
     <div>
