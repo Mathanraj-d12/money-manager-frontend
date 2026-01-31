@@ -296,105 +296,108 @@ function Home() {
 
         {/* ================= TRANSACTIONS ================= */}
 <div className="space-y-4">
-  {grouped.map((t) =>
-    t.isTransfer ? (
-      /* ===== TRANSFER CARD ===== */
-      <div
-        key={t._id}
-        className="bg-white border rounded-2xl p-5 flex justify-between"
-      >
-        <div>
-          <p className="font-medium text-slate-800">
-            Transfer: {t.fromAccount} → {t.toAccount}
-          </p>
-          <p className="text-sm text-slate-500">{t.division}</p>
-        </div>
+  {grouped.map((t) => {
+  const isEditable =
+    !t.isTransfer &&
+    (Date.now() - new Date(t.createdAt)) / (1000 * 60 * 60) <= 12;
 
-        <div className="flex gap-6 items-center">
-          <p className="font-semibold text-indigo-600">
-            ₹ {t.amount}
-          </p>
-
-          {/* ✅ DELETE TRANSFER */}
-          <button
-            onClick={async () => {
-              if (!window.confirm("Delete this transfer?")) return;
-
-              await API.delete(
-                `/transactions/transfer/${t.transferId}`
-              );
-
-              fetchData();
-              fetchSummary();
-              fetchAnalytics(analyticsType);
-            }}
-            className="text-rose-500 text-xs hover:underline"
-          >
-            Delete
-          </button>
-        </div>
+  return t.isTransfer ? (
+    /* ===== TRANSFER CARD ===== */
+    <div
+      key={t._id}
+      className="bg-white border rounded-2xl p-5 flex justify-between items-center"
+    >
+      <div>
+        <p className="font-medium text-slate-800">
+          Transfer: {t.fromAccount} → {t.toAccount}
+        </p>
+        <p className="text-sm text-slate-500">{t.division}</p>
       </div>
-    ) : (
-      /* ===== NORMAL TRANSACTION CARD ===== */
-      <div
-        key={t._id}
-        className="bg-white border rounded-2xl p-5 flex justify-between"
-      >
-        <div>
-          <p className="font-medium text-slate-800">
-            {t.category} ({t.type})
-          </p>
-          <p className="text-sm text-slate-500">{t.division}</p>
-        </div>
 
-        <div className="flex gap-6 items-center">
-  <p className="font-semibold text-indigo-600">
-    ₹ {t.amount}
-  </p>
+      <div className="flex items-center gap-4">
+        <p className="font-semibold text-indigo-600">
+          ₹ {t.amount}
+        </p>
 
-  {/* ✏️ EDIT */}
-  <button
-  disabled={!isEditable}
-  onClick={() => {
-    if (!isEditable) return;
-    setEditData(t);
-    setOpen(true);
-  }}
-  title={
-    !isEditable
-      ? "Edit locked after 12 hours"
-      : "Edit transaction"
-  }
-  className={`text-xs font-medium ${
-    isEditable
-      ? "text-indigo-600 hover:underline cursor-pointer"
-      : "text-gray-400 cursor-not-allowed"
-  }`}
->
-  Edit
-</button>
+        <button
+          onClick={async () => {
+            if (!window.confirm("Delete this transfer?")) return;
 
+            await API.delete(
+              `/transactions/transfer/${t.transferId}`
+            );
 
-  {/* 🗑 DELETE */}
-  <button
-    onClick={async () => {
-      if (!window.confirm("Delete this transaction?")) return;
-
-      await API.delete(`/transactions/${t._id}`);
-
-      fetchData();
-      fetchSummary();
-      fetchAnalytics(analyticsType);
-    }}
-    className="text-rose-500 text-xs hover:underline"
-  >
-    Delete
-  </button>
-</div>
-
+            fetchData();
+            fetchSummary();
+            fetchAnalytics(analyticsType);
+          }}
+          className="text-rose-500 text-xs hover:underline"
+        >
+          Delete
+        </button>
       </div>
-    )
-  )}
+    </div>
+  ) : (
+    /* ===== NORMAL TRANSACTION CARD ===== */
+    <div
+      key={t._id}
+      className="bg-white border rounded-2xl p-5 flex justify-between items-center"
+    >
+      <div>
+        <p className="font-medium text-slate-800">
+          {t.category}
+          <span className="text-xs text-slate-500 ml-2">
+            ({t.type})
+          </span>
+        </p>
+        <p className="text-sm text-slate-500">{t.division}</p>
+      </div>
+
+      <div className="flex items-center gap-6">
+        <p
+          className={`font-semibold ${
+            t.type === "income"
+              ? "text-emerald-600"
+              : "text-rose-500"
+          }`}
+        >
+          ₹ {t.amount}
+        </p>
+
+        {/* ✏️ EDIT (12 HOURS LOCK) */}
+        <button
+          disabled={!isEditable}
+          onClick={() => {
+            if (!isEditable) return;
+            setEditData(t);
+            setOpen(true);
+          }}
+          title={
+            isEditable
+              ? "Edit transaction"
+              : "Edit locked after 12 hours"
+          }
+          className={`text-xs ${
+            isEditable
+              ? "text-indigo-600 hover:underline"
+              : "text-gray-400 cursor-not-allowed"
+          }`}
+        >
+          Edit
+        </button>
+
+        {/* 🗑 DELETE */}
+        <button
+          onClick={() => handleDelete(t._id)}
+          className="text-rose-500 text-xs hover:underline"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+})}
+
 </div>
 {/* ================= MODAL ================= */}
 {open && (
