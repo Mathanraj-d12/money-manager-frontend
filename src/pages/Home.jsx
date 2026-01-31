@@ -72,7 +72,7 @@ function Home() {
 
   const applyFilters = async () => {
     const params = new URLSearchParams(
-      Object.entries(filters).filter(([_, v]) => v)
+      Object.entries(filters).filter(([_, v]) => v),
     ).toString();
 
     const res = await API.get(`/transactions/filter?${params}`);
@@ -97,9 +97,7 @@ function Home() {
     if (t.category === "transfer" && t.transferId) {
       if (usedTransferIds.has(t.transferId)) return;
 
-      const pair = transactions.filter(
-        (x) => x.transferId === t.transferId
-      );
+      const pair = transactions.filter((x) => x.transferId === t.transferId);
 
       if (pair.length === 2) {
         const from = pair.find((x) => x.type === "expense");
@@ -125,7 +123,6 @@ function Home() {
   return (
     <div className="min-h-screen bg-slate-100 py-10">
       <div className="max-w-5xl mx-auto px-4">
-
         {/* ================= HEADER ================= */}
         <div className="flex justify-between items-center mb-10">
           <div>
@@ -153,9 +150,7 @@ function Home() {
         {/* ================= ANALYTICS ================= */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-slate-800">
-              Analytics
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-800">Analytics</h2>
 
             <select
               value={analyticsType}
@@ -202,214 +197,206 @@ function Home() {
         />
 
         {/* ================= FILTERS ================= */}
-{/* ================= FILTERS ================= */}
-<div className="bg-white border rounded-2xl p-6 mb-10">
-  <h3 className="text-base font-semibold text-slate-800 mb-4">
-    Filter Transactions
-  </h3>
+        {/* ================= FILTERS ================= */}
+        <div className="bg-white border rounded-2xl p-6 mb-10">
+          <h3 className="text-base font-semibold text-slate-800 mb-4">
+            Filter Transactions
+          </h3>
 
-  {/* GRID */}
-  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-    {/* CATEGORY (TYPE ONLY) */}
-    <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
-        Category
-      </label>
-      <input
-        type="text"
-        name="category"
-        value={filters.category}
-        onChange={handleFilterChange}
-        placeholder="Type category (food, fuel...)"
-        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
-      />
-    </div>
+          {/* GRID */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {/* CATEGORY (TYPE ONLY) */}
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Category
+              </label>
+              <input
+                type="text"
+                name="category"
+                value={filters.category}
+                onChange={handleFilterChange}
+                placeholder="Type category (food, fuel...)"
+                className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
+              />
+            </div>
 
-    {/* DIVISION */}
-    <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
-        Division
-      </label>
-      <select
-        name="division"
-        value={filters.division}
-        onChange={handleFilterChange}
-        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
-      >
-        <option value="">All</option>
-        <option value="personal">Personal</option>
-        <option value="office">Office</option>
-      </select>
-    </div>
+            {/* DIVISION */}
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Division
+              </label>
+              <select
+                name="division"
+                value={filters.division}
+                onChange={handleFilterChange}
+                className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
+              >
+                <option value="">All</option>
+                <option value="personal">Personal</option>
+                <option value="office">Office</option>
+              </select>
+            </div>
 
-    {/* FROM DATE */}
-    <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
-        From Date
-      </label>
-      <input
-        type="date"
-        name="startDate"
-        value={filters.startDate}
-        onChange={handleFilterChange}
-        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
-      />
-    </div>
+            {/* FROM DATE */}
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                From Date
+              </label>
+              <input
+                type="date"
+                name="startDate"
+                value={filters.startDate}
+                onChange={handleFilterChange}
+                className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
+              />
+            </div>
 
-    {/* TO DATE */}
-    <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1">
-        To Date
-      </label>
-      <input
-        type="date"
-        name="endDate"
-        value={filters.endDate}
-        onChange={handleFilterChange}
-        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
-      />
-    </div>
-  </div>
+            {/* TO DATE */}
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                To Date
+              </label>
+              <input
+                type="date"
+                name="endDate"
+                value={filters.endDate}
+                onChange={handleFilterChange}
+                className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
+              />
+            </div>
+          </div>
 
-  {/* ACTION BUTTONS */}
-  <div className="flex justify-end gap-4 mt-6">
-    <button
-      onClick={resetFilters}
-      className="px-5 py-2 rounded-xl text-sm border border-slate-300 text-slate-600 hover:bg-slate-100"
-    >
-      Reset
-    </button>
+          {/* ACTION BUTTONS */}
+          <div className="flex justify-end gap-4 mt-6">
+            <button
+              onClick={resetFilters}
+              className="px-5 py-2 rounded-xl text-sm border border-slate-300 text-slate-600 hover:bg-slate-100"
+            >
+              Reset
+            </button>
 
-    <button
-      onClick={applyFilters}
-      className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm font-medium"
-    >
-      Apply Filters
-    </button>
-  </div>
-</div>
-
-
+            <button
+              onClick={applyFilters}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm font-medium"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </div>
 
         {/* ================= TRANSACTIONS ================= */}
-<div className="space-y-4">
-  {grouped.map((t) => {
-  const isEditable =
-    !t.isTransfer &&
-    (Date.now() - new Date(t.createdAt)) / (1000 * 60 * 60) <= 12;
+        <div className="space-y-4">
+          {grouped.map((t) => {
+            const isEditable =
+              !t.isTransfer &&
+              (Date.now() - new Date(t.createdAt)) / (1000 * 60 * 60) <= 12;
 
-  return t.isTransfer ? (
-    /* ===== TRANSFER CARD ===== */
-    <div
-      key={t._id}
-      className="bg-white border rounded-2xl p-5 flex justify-between items-center"
-    >
-      <div>
-        <p className="font-medium text-slate-800">
-          Transfer: {t.fromAccount} → {t.toAccount}
-        </p>
-        <p className="text-sm text-slate-500">{t.division}</p>
-      </div>
+            return t.isTransfer ? (
+              /* ===== TRANSFER CARD ===== */
+              <div
+                key={t._id}
+                className="bg-white border rounded-2xl p-5 flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-medium text-slate-800">
+                    Transfer: {t.fromAccount} → {t.toAccount}
+                  </p>
+                  <p className="text-sm text-slate-500">{t.division}</p>
+                </div>
 
-      <div className="flex items-center gap-4">
-        <p className="font-semibold text-indigo-600">
-          ₹ {t.amount}
-        </p>
+                <div className="flex items-center gap-4">
+                  <p className="font-semibold text-indigo-600">₹ {t.amount}</p>
 
-        <button
-          onClick={async () => {
-            if (!window.confirm("Delete this transfer?")) return;
+                  <button
+                    onClick={async () => {
+                      if (!window.confirm("Delete this transfer?")) return;
 
-            await API.delete(
-              `/transactions/transfer/${t.transferId}`
+                      await API.delete(
+                        `/transactions/transfer/${t.transferId}`,
+                      );
+
+                      fetchData();
+                      fetchSummary();
+                      fetchAnalytics(analyticsType);
+                    }}
+                    className="text-rose-500 text-xs hover:underline"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* ===== NORMAL TRANSACTION CARD ===== */
+              <div
+                key={t._id}
+                className="bg-white border rounded-2xl p-5 flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-medium text-slate-800">
+                    {t.category}
+                    <span className="text-xs text-slate-500 ml-2">
+                      ({t.type})
+                    </span>
+                  </p>
+                  <p className="text-sm text-slate-500">{t.division}</p>
+                </div>
+
+                <div className="flex items-center gap-6">
+                  <p
+                    className={`font-semibold ${
+                      t.type === "income" ? "text-emerald-600" : "text-rose-500"
+                    }`}
+                  >
+                    ₹ {t.amount}
+                  </p>
+
+                  {/* ✏️ EDIT (12 HOURS LOCK) */}
+                  <button
+                    disabled={!isEditable}
+                    onClick={() => {
+                      if (!isEditable) return;
+                      setEditData(t);
+                      setOpen(true);
+                    }}
+                    title={
+                      isEditable
+                        ? "Edit transaction"
+                        : "Edit locked after 12 hours"
+                    }
+                    className={`text-xs ${
+                      isEditable
+                        ? "text-indigo-600 hover:underline"
+                        : "text-gray-400 cursor-not-allowed"
+                    }`}
+                  >
+                    Edit
+                  </button>
+
+                  {/* 🗑 DELETE */}
+                  <button
+                    onClick={() => handleDelete(t._id)}
+                    className="text-rose-500 text-xs hover:underline"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             );
-
-            fetchData();
-            fetchSummary();
-            fetchAnalytics(analyticsType);
-          }}
-          className="text-rose-500 text-xs hover:underline"
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  ) : (
-    /* ===== NORMAL TRANSACTION CARD ===== */
-    <div
-      key={t._id}
-      className="bg-white border rounded-2xl p-5 flex justify-between items-center"
-    >
-      <div>
-        <p className="font-medium text-slate-800">
-          {t.category}
-          <span className="text-xs text-slate-500 ml-2">
-            ({t.type})
-          </span>
-        </p>
-        <p className="text-sm text-slate-500">{t.division}</p>
-      </div>
-
-      <div className="flex items-center gap-6">
-        <p
-          className={`font-semibold ${
-            t.type === "income"
-              ? "text-emerald-600"
-              : "text-rose-500"
-          }`}
-        >
-          ₹ {t.amount}
-        </p>
-
-        {/* ✏️ EDIT (12 HOURS LOCK) */}
-        <button
-          disabled={!isEditable}
-          onClick={() => {
-            if (!isEditable) return;
-            setEditData(t);
-            setOpen(true);
-          }}
-          title={
-            isEditable
-              ? "Edit transaction"
-              : "Edit locked after 12 hours"
-          }
-          className={`text-xs ${
-            isEditable
-              ? "text-indigo-600 hover:underline"
-              : "text-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Edit
-        </button>
-
-        {/* 🗑 DELETE */}
-        <button
-          onClick={() => handleDelete(t._id)}
-          className="text-rose-500 text-xs hover:underline"
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  );
-})}
-
-</div>
-{/* ================= MODAL ================= */}
-{open && (
-  <AddTransactionModal
-    initialData={editData}
-    onSuccess={() => {
-      fetchData();
-      fetchSummary();
-      fetchAnalytics(analyticsType);
-      setOpen(false); 
-    }}
-    onClose={() => setOpen(false)}
-  />
-)}
-
+          })}
+        </div>
+        {/* ================= MODAL ================= */}
+        {open && (
+          <AddTransactionModal
+            initialData={editData}
+            onSuccess={() => {
+              fetchData();
+              fetchSummary();
+              fetchAnalytics(analyticsType);
+              setOpen(false);
+            }}
+            onClose={() => setOpen(false)}
+          />
+        )}
       </div>
     </div>
   );
