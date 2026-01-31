@@ -354,14 +354,26 @@ function Home() {
 
   {/* ✏️ EDIT */}
   <button
-    onClick={() => {
-      setEditData(t);   
-      setOpen(true);    
-    }}
-    className="text-indigo-600 text-xs hover:underline"
-  >
-    Edit
-  </button>
+  disabled={!isEditable}
+  onClick={() => {
+    if (!isEditable) return;
+    setEditData(t);
+    setOpen(true);
+  }}
+  title={
+    !isEditable
+      ? "Edit locked after 12 hours"
+      : "Edit transaction"
+  }
+  className={`text-xs font-medium ${
+    isEditable
+      ? "text-indigo-600 hover:underline cursor-pointer"
+      : "text-gray-400 cursor-not-allowed"
+  }`}
+>
+  Edit
+</button>
+
 
   {/* 🗑 DELETE */}
   <button
