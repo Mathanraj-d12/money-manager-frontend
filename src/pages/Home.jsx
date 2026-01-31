@@ -202,27 +202,28 @@ function Home() {
         />
 
         {/* ================= FILTERS ================= */}
+{/* ================= FILTERS ================= */}
 <div className="bg-white border rounded-2xl p-6 mb-10">
   <h3 className="text-base font-semibold text-slate-800 mb-4">
     Filter Transactions
   </h3>
 
-  <div>
-  <label className="block text-xs font-medium text-slate-500 mb-1">
-    Category
-  </label>
-
-  <input
-    type="text"
-    name="category"
-    value={filters.category}
-    onChange={handleFilterChange}
-    placeholder="Type category (food, fuel, medical...)"
-    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
-  />
-</div>
-
-
+  {/* GRID */}
+  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+    {/* CATEGORY (TYPE ONLY) */}
+    <div>
+      <label className="block text-xs font-medium text-slate-500 mb-1">
+        Category
+      </label>
+      <input
+        type="text"
+        name="category"
+        value={filters.category}
+        onChange={handleFilterChange}
+        placeholder="Type category (food, fuel...)"
+        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
+      />
+    </div>
 
     {/* DIVISION */}
     <div>
@@ -287,6 +288,7 @@ function Home() {
     </button>
   </div>
 </div>
+
 
 
         {/* ================= TRANSACTIONS ================= */}
