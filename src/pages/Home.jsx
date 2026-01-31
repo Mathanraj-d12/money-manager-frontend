@@ -213,23 +213,15 @@ function Home() {
   </label>
 
   <input
-    list="categories"
+    type="text"
     name="category"
     value={filters.category}
     onChange={handleFilterChange}
-    placeholder="Type or select category"
+    placeholder="Type category (food, fuel, medical...)"
     className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm"
   />
-
-  <datalist id="categories">
-    <option value="food" />
-    <option value="fuel" />
-    <option value="movie" />
-    <option value="loan" />
-    <option value="medical" />
-    <option value="transfer" />
-  </datalist>
 </div>
+
 
 
     {/* DIVISION */}
